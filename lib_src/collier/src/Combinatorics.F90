@@ -853,7 +853,7 @@ contains
 
     integer, intent(in) :: Nm1,rmax
     integer :: r, n0, nc, bino, i 
-    real(dp) :: tmp
+    real :: tmp
 
     tmp =1.0/CalcFactorial(Nm1-1)
 
