@@ -269,13 +269,17 @@ end subroutine Init_DD_global
 
 integer (kind=8) function Binomial_DD(n,m)
   integer :: i,n,m
+  integer (kind=8) tmp
 
   Binomial_DD = 1
+  tmp = 1
+  
   if ((m.ge.0).and.(m.le.n)) then
     do i=1,m
       Binomial_DD = Binomial_DD*(n+1-i)
-      Binomial_DD = Binomial_DD/i
+      tmp = tmp * i
     enddo
+    Binomial_DD = Binomial_DD / tmp
   else
     Binomial_DD = 0
   endif

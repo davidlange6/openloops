@@ -852,7 +852,10 @@ contains
   function CalcNCoefs(Nm1,rmax) result(nc)
 
     integer, intent(in) :: Nm1,rmax
-    integer :: r, n0, nc, bino, i
+    integer :: r, n0, nc, bino, i 
+    real(dp) :: tmp
+
+    tmp =1.0/CalcFactorial(Nm1-1)
 
     nc = 0
     do r=0,rmax
@@ -861,7 +864,7 @@ contains
         do i=r-2*n0+1,Nm1+r-2*n0-1
           bino = bino*i
         end do
-        nc = nc + bino/CalcFactorial(Nm1-1)
+        nc = nc + bino*tmp
       end do
     end do
 
