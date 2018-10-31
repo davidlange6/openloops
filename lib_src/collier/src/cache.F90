@@ -493,9 +493,10 @@ contains
     integer :: i
     logical :: infwri
     
-    do i=1,ncache_max
-      call SetCacheMode_cll(i,1)
-    end do
+     call SetCacheModeSet_cll(1,ncache_max,1)
+!    do i=1,ncache_max
+!      call SetCacheMode_cll(i,1)
+!    end do
     
     if (infoutlev_cache.ge.2) call InfOut_cache('SwitchOffCacheSystem_cll','cache system switched off',infwri)    
 
@@ -523,9 +524,10 @@ contains
       if (infoutlev_cache.ge.1) call InfOut_cache('SwitchOnCacheSystem_cll','cache has not been initialized',infwri)    
       if(infwri)  write(ninfout_cache,*) '--> it cannot be switched on' 
     else  
-      do i=1,ncache_max
-        call SetCacheMode_cll(i,2)
-      end do
+      call SetCacheModeSet_cll(1,ncache_max,2)
+!      do i=1,ncache_max
+!        call SetCacheMode_cll(i,2)
+!      end do
       if (infoutlev_cache.ge.2) call InfOut_cache('SwitchOnCacheSystem_cll','cache system switched on',infwri) 
     end if
 
@@ -745,6 +747,38 @@ contains
     end if
 
   end subroutine SetCacheMode_cll
+
+  subroutine SetCacheModeSet_cll(ncache_min,ncache_max,mode_in)
+
+    integer, intent(in) :: ncache_min,ncache_max,mode_in
+    integer :: i
+    logical :: infwri
+
+    if ((ncache_min.le.0).or.(ncache_max.gt.ncache_max).or.(ncache_min.gt.ncache_max)) then
+      infwri = .false.
+      if (infoutlev_cache.ge.1) call InfOut_cache('SetCacheMode_cll','cache cannot be modified',infwri) 
+      if(infwri) write(ninfout_cache,*) 'cache range', ncache_min,'to',ncache_max, 'does not exist!'
+      
+    else if ((mode_in.lt.1).or.(mode_in.gt.2)) then
+      if (infoutlev_cache.ge.1) call InfOut_cache('SetCacheMode_cll', &
+                              'cache can only be set to mode 1 (internal) or 2 (internal + external)!',infwri) 
+    else
+      if (mode_in.eq.1) then
+        do i=ncache_min,ncache_max
+          if (cache_mode(ncache_in).ne.-1) then
+            cache_mode_cp(ncache_in) = cache_mode(ncache_in)
+          end if
+          cache_mode(ncache_in) = -1
+        end do
+      else
+        do i=ncache_min,ncache_max
+          cache_mode(ncache_in) = cache_mode_cp(ncache_in)
+        end do
+      end if       
+    end if
+
+  end subroutine SetCacheModeSet_cll
+
 
 
 
