@@ -765,14 +765,14 @@ contains
     else
       if (mode_in.eq.1) then
         do i=ncache_min,ncache_max
-          if (cache_mode(ncache_in).ne.-1) then
-            cache_mode_cp(ncache_in) = cache_mode(ncache_in)
+          if (cache_mode(i).ne.-1) then
+            cache_mode_cp(i) = cache_mode(i)
           end if
-          cache_mode(ncache_in) = -1
+          cache_mode(i) = -1
         end do
       else
         do i=ncache_min,ncache_max
-          cache_mode(ncache_in) = cache_mode_cp(ncache_in)
+          cache_mode(i) = cache_mode_cp(i)
         end do
       end if       
     end if
