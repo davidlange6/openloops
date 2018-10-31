@@ -830,9 +830,10 @@ contains
 
     do r=0,rmax
       NCoefs(r,1) = r/2+1
-      do i=2,N
-        NCoefs(r,i) = CalcNCoefs(i-1,r)
-      end do
+    end do
+
+    do i=2,N
+      NCoefs(0:r,i) = CalcNCoefs(i-1,0,r)
     end do
 
   end subroutine SetNCoefs
@@ -846,10 +847,15 @@ contains
   !
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  function CalcNCoefs(Nm1,rmax) result(nc)
+  function CalcNCoefs(Nm1,rmin,rmax) !result(nc2)
 
-    integer, intent(in) :: Nm1,rmax
+    integer, intent(in) :: Nm1,rmax,rmin
+    integer :: CalcNCoefs(rmin:rmax)
     integer :: r, n0, nc, bino, i
+
+    real fact
+
+    fact=1.0/CalcFactorial(Nm1-1)
 
     nc = 0
     do r=0,rmax
@@ -858,15 +864,14 @@ contains
         do i=r-2*n0+1,Nm1+r-2*n0-1
           bino = bino*i
         end do
-        nc = nc + bino/CalcFactorial(Nm1-1)
+        nc = nc + bino*fact
       end do
+      if ( r.ge.rmin) then
+         CalcNCoefs(r)=nc
+      end if
     end do
-
-  end function CalcNCoefs  
-
-
-
-
+  
+  end function CalcNCoefs
 
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   !  subroutine SetNCoefsG(N,rmax)
