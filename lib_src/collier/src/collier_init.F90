@@ -2061,7 +2061,7 @@ contains
     
     call SetRitmaxBCD_cll(ritmaxB,ritmaxC,ritmaxD)
 
-    call InitGlobalDD_cll(nmax_cll,ritmax_cll)
+    !call InitGlobalDD_cll(nmax_cll,ritmax_cll)
     call GetReqAcc_cll(acc)
     call SetReqAcc_cll(acc)
     call GetCritAcc_cll(acc)
