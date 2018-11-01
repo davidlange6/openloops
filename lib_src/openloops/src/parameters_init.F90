@@ -876,6 +876,7 @@ subroutine loop_parameters_init
     if (maxpoint > maxpoint_active .or. maxrank > maxrank_active .or. cll_channels > cll_channels_active) then
       if (maxpoint > maxpoint_active .or. maxrank > maxrank_active) then
         if (nosplash) call stdout_off()
+	print *,maxpoint,maxpoint_active,maxrank,maxrank_active
         if (cll_log == 0) then
           call init_cll(maxpoint, rmax=maxrank, folder_name="", noreset=.true.)
         else
