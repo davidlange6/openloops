@@ -1665,6 +1665,7 @@ contains
     integer :: outlevel_dd,outchannel_dd,mode34_dd,mode5_dd,mode6_dd
     double precision :: cacc_dd,dacc_dd
 
+    print *,"Calling init",nmax_cll,ritmax_cll
     call Init_DD_global(nmax_cll,ritmax_cll)
 
     call DDgetmode(cacc_dd,dacc_dd,mode34_dd,mode5_dd,mode6_dd,outlevel_dd,outchannel_dd)
